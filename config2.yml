@@ -1,0 +1,33 @@
+zipkinFactory:
+  enabled: true
+  collector: http
+  baseUrl: http://localhost:9411/
+  serviceHost: 127.0.0.1
+  servicePort: 8080
+
+# HTTP-specific options.
+server:
+
+  type: simple
+  applicationContextPath: /
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 8081
+
+  requestLog:
+    appenders:
+      - type: console
+        timeZone: UTC
+        target: stdout
+
+logging:
+  level: INFO
+  loggers:
+    com.smoketurner.dropwizard.zipkin: DEBUG
+    com.example.helloworld: DEBUG
+    brave: DEBUG
+  appenders:
+    - type: console
+      timeZone: UTC
+      target: stdout
