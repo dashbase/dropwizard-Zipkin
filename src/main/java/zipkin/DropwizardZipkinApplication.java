@@ -25,7 +25,7 @@ public class DropwizardZipkinApplication extends Application<DropwizardZipkinCon
     @Override
     public void initialize(final Bootstrap<DropwizardZipkinConfiguration> bootstrap) {
         //===================== add zipkin bundle ===================
-        String serviceName = "dropwizard-zipkin";
+        String serviceName = "dropwizard-zipkin"; // it will be used as service name in zipkin
         bootstrap.addBundle(new ZipkinBundle<DropwizardZipkinConfiguration>(serviceName) {
             @Override
             public ZipkinFactory getZipkinFactory(DropwizardZipkinConfiguration configuration) {

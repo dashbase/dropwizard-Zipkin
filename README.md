@@ -2,11 +2,11 @@
 
 ## Start DropwizardZipkin Application
 
-1. Run `mvn clean install` to build the application
+1. Run `mvn clean package` to build the application
+1. Start zipkin server. We assume the zipkin host is 'http://localhost:9411'
 1. Start the first app with `java -jar target/dropwizard-zipkin-1.0-SNAPSHOT.jar server config1.yml`
 1. Start the second app with `java -jar target/dropwizard-zipkin-1.0-SNAPSHOT.jar server config2.yml`
-1. Start zipkin server. We assume the zipkin host is 'http://localhost:9411'
-1. Enter `http://localhost:8080/query`
+1. Enter `http://localhost:8080/query` to produce traces.
 1. Enter `http://localhost:9411/query`. Traces are showed here.
 
 ![](docs/1.png)
