@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.Dispatcher;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.jackson.JacksonConverterFactory;
 
@@ -14,7 +15,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import java.io.IOException;
 import java.net.URL;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -26,10 +26,18 @@ public class HelloWorldResource {
     private OkHttpClient client;
     private Retrofit restAdator;
 
-    public HelloWorldResource(HttpTracing tracing) throws IOException {
+    public HelloWorldResource(HttpTracing tracing) throws Exception {
 
         //============== Add tracing to okhttp3 client ================
         client = new OkHttpClient.Builder()
+                .addInterceptor(chain -> {
+                    Request original = chain.request();
+
+                    Request request = original.newBuilder()
+                            .header("client", "myapp")
+                            .build();
+                    return chain.proceed(request);
+                })
                 .dispatcher(new Dispatcher(
                         tracing.tracing().currentTraceContext().executorService(new Dispatcher().executorService())
                 ))
@@ -41,6 +49,9 @@ public class HelloWorldResource {
         restAdator = new Retrofit.Builder().baseUrl(HttpUrl.get(url))
                 .addConverterFactory(JacksonConverterFactory.create(mapper))
                 .client(client).build();
+
+        FetchService svc = restAdator.create(FetchService.class);
+        svc.fetch().execute();
     }
 
     @GET

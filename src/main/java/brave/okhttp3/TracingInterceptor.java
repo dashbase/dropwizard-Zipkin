@@ -7,13 +7,14 @@ import brave.http.HttpClientHandler;
 import brave.http.HttpTracing;
 import brave.propagation.Propagation;
 import brave.propagation.TraceContext;
-import java.io.IOException;
-import java.net.InetSocketAddress;
 import okhttp3.Connection;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 import zipkin2.Endpoint;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
 
 /**
  * This is a network-level interceptor, which creates a new span for each attempt. Note that this
@@ -48,6 +49,8 @@ public final class TracingInterceptor implements Interceptor {
     Request.Builder requestBuilder = request.newBuilder();
 
     Span span = handler.handleSend(injector, requestBuilder, request);
+    String client = request.header("client");
+    span.tag("client", client);
     parseServerAddress(chain.connection(), span);
     Response response = null;
     Throwable error = null;

@@ -11,7 +11,7 @@
 
 ![](docs/1.png)
 
-## How to Integrate zipkin with Other Dropwizard Application
+## How to Integrate Zipkin with Other Dropwizard Application
 
 1. Add dependencies to `pom.xml`
 
@@ -68,3 +68,16 @@
             .addNetworkInterceptor(TracingInterceptor.create(tracing))
             .build();
     ```
+    
+## How to Add Custom Tags to Spans
+
+Brave can intercept okhttp3 request. So we extract the http header as tags. 
+
+That is, add these two lines to `TracingInterceptor.class`
+
+```java
+String client = request.header("client");
+span.tag("client", client);
+```
+
+In this way, 'client' header could be recorded as a tag. 

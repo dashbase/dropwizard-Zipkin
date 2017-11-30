@@ -37,7 +37,7 @@ public class DropwizardZipkinApplication extends Application<DropwizardZipkinCon
 
     @Override
     public void run(final DropwizardZipkinConfiguration configuration,
-                    final Environment environment) throws IOException {
+                    final Environment environment) throws Exception {
         //=================== register tracing ========================
         final Optional<HttpTracing> tracing = configuration.getZipkinFactory().build(environment);
         if (tracing.isPresent()) {
