@@ -1,9 +1,9 @@
 zipkinFactory:
   enabled: true
-  collector: http
-  baseUrl: http://localhost:9411/
-  serviceHost: 127.0.0.1
-  servicePort: 8080
+  collector: console_with_headers
+#  baseUrl: http://52.53.159.131:9411/
+#  serviceHost: 127.0.0.1
+#  servicePort: 8080
 
 # HTTP-specific options.
 server:
