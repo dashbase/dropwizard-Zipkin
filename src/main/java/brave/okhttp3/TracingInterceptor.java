@@ -49,8 +49,6 @@ public final class TracingInterceptor implements Interceptor {
     Request.Builder requestBuilder = request.newBuilder();
 
     Span span = handler.handleSend(injector, requestBuilder, request);
-    String client = request.header("client");
-    span.tag("client", client);
     parseServerAddress(chain.connection(), span);
     Response response = null;
     Throwable error = null;

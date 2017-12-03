@@ -1,7 +1,7 @@
 package zipkin;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.smoketurner.dropwizard.zipkin.ConsoleZipkinFactory;
+import com.smoketurner.dropwizard.zipkin.ConsoleZipkinWithHeadersFactory;
 import com.smoketurner.dropwizard.zipkin.ZipkinFactory;
 import io.dropwizard.Configuration;
 
@@ -12,7 +12,7 @@ public class DropwizardZipkinConfiguration extends Configuration {
 
     @Valid
     @NotNull
-    public final ZipkinFactory zipkinFactory = new ConsoleZipkinFactory();
+    public final ZipkinFactory zipkinFactory = new ConsoleZipkinWithHeadersFactory();
 
     @JsonProperty
     public ZipkinFactory getZipkinFactory() {
